@@ -15,7 +15,7 @@ class FullBinaryTrees {
         }
         val list = getSequences(count - 1, ROOT_ELEMENT, 0)
 
-        return list.joinToString("", "[", "]")
+        return list.joinToString("][", "[", "]")
     }
 
     private fun getSequences(count: Int, rootElement: String, node: Int): ArrayList<String> {
