@@ -5,31 +5,24 @@ import kotlin.math.sqrt
 
 class SquareDecomposer {
 
-    fun decomposeNumber(number: Int): Array<Int>? {
-        if (number < 3) return null
-        val square = number * number
-        val previousRootSquare = number - 1
+    fun decomposeNumber(number: Int) = members(number * number, number - 1)
 
-        val temp = getMemberList(square, previousRootSquare)
-        return temp
-    }
+    private fun members(square: Int, rootSquare: Int): Array<Int>? {
+        if (sqrt(square.toDouble()) < 1) return null
 
-    private fun getMemberList(inputRemain: Int, previousRootSquare: Int): Array<Int>? {
-        for (currentRoot in previousRootSquare downTo 1 step 1) {
-            val currentRemain = inputRemain - currentRoot.toDouble().pow(2)
+        for (currentRoot in rootSquare downTo 1) {
+            val remain = square - currentRoot * currentRoot
 
-            if (currentRemain < 0) return null
+            if (remain < 0) return null
 
-            if (currentRemain == 0.0) return arrayOf(currentRoot)
+            if (remain == 0) return arrayOf(currentRoot)
 
-            val square = sqrt(currentRemain).toInt()
+            val nextSquare = sqrt(remain.toDouble()).toInt()
             val nextSquareRoot =
-                if (square >= currentRoot) getMemberList(currentRemain.toInt(), currentRoot - 1)
-                else getMemberList(currentRemain.toInt(), square)
+                if (nextSquare >= currentRoot) members(remain, currentRoot - 1)
+                else members(remain, nextSquare)
 
-            return if (nextSquareRoot?.isNotEmpty() == true) {
-                nextSquareRoot + arrayOf(currentRoot)
-            } else null
+            if (nextSquareRoot?.isNotEmpty() == true) return nextSquareRoot + arrayOf(currentRoot)
         }
 
         return null
