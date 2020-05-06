@@ -55,12 +55,12 @@ class ArrayCalculator {
         val tempResults = mutableListOf<Int>()
         var nextIndex = 1
 
-        while (nextIndex < items.size) {
+//        while (nextIndex < items.size) {
             items.forEachIndexed { index, item ->
                 if (index != nextIndex && nextIndex < items.size) tempResults.add(item * items[nextIndex])
-//                ++nextIndex
-            }
-            ++nextIndex
+                ++nextIndex
+//            }
+//            ++nextIndex
         }
 
         tempResults.toMutableSet().toMutableList()
