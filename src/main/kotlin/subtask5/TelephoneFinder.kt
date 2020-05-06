@@ -5,31 +5,29 @@ class TelephoneFinder {
     fun findAllNumbersFromGivenNumber(number: String): Array<String>? {
         if (number.contains("-")) return null
 
-        val numberList = number.toCharArray().toMutableList()
-
-        var resultList = mutableListOf<String>()
-        var neighboursArray = emptyArray<Char>()
+        val resultList = mutableListOf<String>()
+        var neighboursArray: Array<Char>
 
         number.forEachIndexed { index, charNumber ->
+            val numberList = number.toCharArray().toMutableList()
             getNeighbour(charNumber)?.let {
                 neighboursArray = it
                 neighboursArray.forEach { neighbourChar ->
                     numberList[index] = neighbourChar
-                    resultList.add(numberList.toString())
+                    var string: String = ""
+                    numberList.forEach {
+                        string += it
+                    }
+                    resultList.add(string)
                 }
             }
-
-//            result.add()
         }
 
-        var resultArray: Array<String> = emptyArray()
-        resultArray.plus(resultList)
-
-        return resultArray
+        return resultList.map { it }.toTypedArray()
     }
 
-    fun getNeighbour(number: Char) : Array<Char>? {
-        return when(number) {
+    fun getNeighbour(number: Char): Array<Char>? {
+        return when (number) {
             '0' -> arrayOf('8')
             '1' -> arrayOf('2', '4')
             '2' -> arrayOf('1', '3', '5')
